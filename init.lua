@@ -90,6 +90,9 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv")
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
@@ -102,7 +105,7 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -166,6 +169,7 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -272,6 +276,29 @@ require('lazy').setup({
   -- Then, because we use the `config` key, the configuration only runs
   -- after the plugin has been loaded:
   --  config = function() ... end
+  {
+    'ThePrimeagen/harpoon',
+    config = function()
+      local mark = require 'harpoon.mark'
+      local ui = require 'harpoon.ui'
+
+      vim.keymap.set('n', '<leader>a', mark.add_file)
+      vim.keymap.set('n', '<C-e>', ui.toggle_quick_menu)
+
+      vim.keymap.set('n', '<C-h>', function()
+        ui.nav_file(1)
+      end)
+      vim.keymap.set('n', '<C-t>', function()
+        ui.nav_file(2)
+      end)
+      vim.keymap.set('n', '<C-n>', function()
+        ui.nav_file(3)
+      end)
+      vim.keymap.set('n', '<C-s>', function()
+        ui.nav_file(4)
+      end)
+    end,
+  },
 
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
@@ -374,7 +401,7 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -577,6 +604,12 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
+        basedpyright = {
+          capabilities = capabilities,
+          settings = {
+            basedpyright = { typeCheckingMode = 'standard' },
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
