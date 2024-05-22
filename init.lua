@@ -607,7 +607,7 @@ require('lazy').setup({
         basedpyright = {
           capabilities = capabilities,
           settings = {
-            basedpyright = { typeCheckingMode = 'standard' },
+            basedpyright = { typeCheckingMode = 'strict' },
           },
         },
 
