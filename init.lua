@@ -182,6 +182,7 @@ require('lazy').setup({
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
   { import = 'plugins.telescope' },
 
+  { import = 'plugins.completion' },
   { import = 'plugins.lsp' },
 
   { -- Autoformat
