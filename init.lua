@@ -137,6 +137,7 @@ vim.opt.rtp:prepend(lazypath)
 --  To update plugins you can run
 --    :Lazy update
 --
+--
 require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -180,9 +181,6 @@ require('lazy').setup({
   -- you do for a plugin at the top level, you can do for a dependency.
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
-  {
-    dir = '~/dev/neovim-plugins/blink-cmp-jinni',
-  },
   { import = 'plugins.telescope' },
 
   { import = 'plugins.completion' },
